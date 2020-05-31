@@ -452,6 +452,8 @@ class CheckoutController extends Controller
         $order['customer_city'] = $request->city;
         $order['district'] = $request->customer_district;
         $order['thana'] = $request->thana;
+        $order['shippong_district'] = $request->shipping_customer_district;
+        $order['shippong_thana'] = $request->shipping_thana;
         $order['customer_zip'] = $request->zip;
         $order['shipping_email'] = $request->shipping_email;
         $order['shipping_name'] = $request->shipping_name;

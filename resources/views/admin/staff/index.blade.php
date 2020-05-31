@@ -34,6 +34,7 @@
 									                        <th>{{ __('Options') }}</th>
 														</tr>
 													</thead>
+
 												</table>
 										</div>
 									</div>

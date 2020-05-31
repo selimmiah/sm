@@ -121,9 +121,6 @@
 													</div>
 												</div>
 
-
-
-
 												<div class="row">
 													<div class="col-lg-4">
 														<div class="left-area">
@@ -131,7 +128,7 @@
 														</div>
 													</div>
 													<div class="col-lg-7">
-														<select class="form-control" name="customer_district" required="" id="district">
+														<select class="form-control" name="district" required="" id="district">
 															@include('includes.districts')
 														</select>
 													</div>
@@ -146,18 +143,12 @@
 														</div>
 													</div>
 													<div class="col-lg-7">
-
 														<select class="form-control" name="thana" required="" id="thana">
 															<option value="">Select thana</option>
 														</select>
 
 													</div>
 												</div>
-
-
-
-
-
 
 												<div class="row">
 														<div class="col-lg-4">
@@ -231,8 +222,5 @@
 								});
 							});
 						</script>
-						district_id
-
-
 
 @endsection

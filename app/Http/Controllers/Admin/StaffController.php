@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Thana;
 use Datatables;
 use App\Models\Admin;
+use App\Models\District;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -40,6 +42,7 @@ class StaffController extends Controller
   	public function index()
     {
         return view('admin.staff.index');
+
     }
 
     //*** GET Request
@@ -71,8 +74,18 @@ class StaffController extends Controller
             $name = time().$file->getClientOriginalName();
             $file->move('images/admins',$name);
             $input['photo'] = $name;
-        } 
+        }
+
         $input['role'] = 'Staff';
+       $input['region_name'] = $request->region_name;
+       $input['territory_name'] = $request->territory_name;
+       $input['bd_id'] = $request->bd_id;
+       $input['distributor_name'] = $request->distributor_name;
+       $input['address'] = $request->address;
+       $input['district'] = $request->district;
+       $input['thana'] = $request->thana;
+
+
         $input['password'] = bcrypt($request['password']);
         $data->fill($input)->save();
         //--- Logic Section Ends
@@ -127,6 +140,17 @@ class StaffController extends Controller
             else{
                 $input['password'] = Hash::make($request->password);
             }
+
+
+            $input['region_name'] = $data->region_name;
+            $input['territory_name'] = $data->territory_name;
+            $input['bd_id'] = $data->bd_id;
+            $input['distributor_name'] = $data->distributor_name;
+            $input['address'] = $data->address;
+            $input['district'] = $data->district;
+            $input['thana'] = $data->thana;
+
+
             $data->update($input);
             $msg = 'Data Updated Successfully.';
             return response()->json($msg);
@@ -142,7 +166,12 @@ class StaffController extends Controller
     public function show($id)
     {
         $data = Admin::findOrFail($id);
-        return view('admin.staff.show',compact('data'));
+
+
+        $districts = District::pluck('district_name', 'id');
+        $thanas = Thana::pluck('thana_name', 'id');
+
+        return view('admin.staff.show',compact('data', 'districts','thanas'));
     }
 
     //*** GET Request Delete

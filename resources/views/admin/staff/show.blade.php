@@ -41,12 +41,12 @@
 
                                             <tr>
                                                 <th>{{ __("District") }}</th>
-                                                <td>{{ $data->role_id == 0 ? 'No Role' : $data->role->name }}</td>
+                                                <td>@if($data->district){{ $districts[$data->district]}}@endif</td>
                                             </tr>
 
                                             <tr>
                                                 <th>{{ __("Thana") }}</th>
-                                                <td>{{ $data->role_id == 0 ? 'No Role' : $data->role->name }}</td>
+                                                <td> @if($data->thana){{ $thanas[$data->thana]}}@endif</td>
                                             </tr>
 
                                             <tr>

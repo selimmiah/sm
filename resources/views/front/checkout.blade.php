@@ -119,7 +119,7 @@
 										</div>
 
 
-										<div class="billing-address">
+										<div class="billing-address thana_selector">
 											<h5 class="title">
 												{{ $langg->lang147 }}
 											</h5>
@@ -156,25 +156,17 @@
 														value="{{ Auth::guard('web')->check() ? Auth::guard('web')->user()->email : '' }}">
 												</div>
 
-
-{{--												style="height: 55px;"--}}
-
 												<div class="col-lg-6" style="height: 55px;">
-													<select class="form-control" name="customer_district" required="" id="district">
+													<select class="form-control district" name="customer_district" required="">
 														@include('includes.districts')
 													</select>
 												</div>
 
-
 												<div class="col-lg-6">
-
-													<select class="form-control" name="thana" required="" id="thana">
+													<select class="form-control thana" name="thana" required="">
 														<option value="">Select thana</option>
 													</select>
-
 												</div>
-
-
 
 												<div class="col-lg-6">
 													<input class="form-control" type="text" name="address"
@@ -196,7 +188,7 @@
 													<label for="ship-diff-address">{{ $langg->lang160 }}</label>
 											</div>
 										</div>
-										<div class="ship-diff-addres-area d-none">
+										<div class="ship-diff-addres-area d-none thana_selector">
 												<h5 class="title">
 														{{ $langg->lang752 }}
 												</h5>
@@ -213,47 +205,23 @@
 											</div>
 											<div class="row">
 
-
-
-
 												<div class="col-lg-6" style="height: 55px;">
-													<select class="form-control" name="customer_district" required="" id="district">
+													<select class="form-control district" name="shipping_customer_district" required="" >
 														@include('includes.districts')
 													</select>
 												</div>
 
-
 												<div class="col-lg-6">
-													<select class="form-control" name="thana" required="" id="thana">
+													<select class="form-control thana" name="shipping_thana" required="">
 														<option value="">Select thana</option>
 													</select>
 												</div>
-
 
 												<div class="col-lg-6">
 													<input class="form-control ship_input" type="text" name="shipping_address"
 														id="shipping_address" placeholder="{{ $langg->lang155 }}">
 												</div>
-
-{{--												<div class="col-lg-6">--}}
-{{--													<select class="form-control ship_input" name="shipping_country">--}}
-{{--														@include('includes.countries')--}}
-{{--													</select>--}}
-{{--												</div>--}}
-
 											</div>
-{{--											<div class="row">--}}
-{{--												<div class="col-lg-6">--}}
-{{--													<input class="form-control ship_input" type="text" name="shipping_city"--}}
-{{--														id="shipping_city" placeholder="{{ $langg->lang158 }}">--}}
-
-{{--												</div>--}}
-{{--												<div class="col-lg-6">--}}
-{{--													<input class="form-control ship_input" type="text" name="shipping_zip"--}}
-{{--														id="shippingPostal_code" placeholder="{{ $langg->lang159 }}">--}}
-{{--												</div>--}}
-
-{{--											</div>--}}
 
 										</div>
 										<div class="order-note mt-3">
@@ -1375,11 +1343,13 @@ var ck = 0;
 
 </script>
 
+
 <script>
+	$('.district').each(function() {
 
-		$('#district').change(function(){
+		$(this).change(function() {
 			var district_id = $(this).val();
-
+			var thanaSelector = $(this).closest('.thana_selector').find('.thana');
 			$.ajaxSetup({
 				headers: {
 					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1393,13 +1363,12 @@ var ck = 0;
 					district_id: district_id
 				},
 				success: function(data) {
-					$("#thana").html(data);
+					thanaSelector.html(data);
 				}
 			});
-
 		});
-</script>
+	});
 
-district_id
+</script>
 
 @endsection
