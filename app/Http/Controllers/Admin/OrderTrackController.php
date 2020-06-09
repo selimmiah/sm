@@ -40,6 +40,8 @@ class OrderTrackController extends Controller
 
         $title = $_GET['title'];
 
+        dd($title);
+
         $ck = OrderTrack::where('order_id','=',$_GET['id'])->where('title','=',$title)->first();
         if($ck){
             $ck->order_id = $_GET['id'];

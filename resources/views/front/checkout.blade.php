@@ -234,7 +234,32 @@
 										<div class="row">
 											<div class="col-lg-12  mt-3">
 												<div class="bottom-area paystack-area-btn">
-													<button type="submit"  class="mybtn1">{{ $langg->lang753 }}</button>
+
+
+													@php
+														$all_total = Session::has('cart') ? App\Models\Product::convertPrice(Session::get('cart')->totalPrice) : '0.00';
+														$minimam_orders = $gs->minitmam_orders;
+														$totalss = preg_replace('/৳/','', $all_total);
+
+
+													@endphp
+
+													@if($totalss >= $minimam_orders)
+														<button type="submit"  class="mybtn1">{{ $langg->lang753 }}</button>
+													@else
+
+{{--														--------------------------------------------------}}
+																	<h4  style="color:blue; text-align: center;" class="modal-title">Minimam order {{$gs->minitmam_orders}} Taka </h4>
+																</div>
+																<div class="modal-body">
+																	<p style="color:black; text-align: center;">please minimam order {{$gs->minitmam_orders}} Taka</p>
+																</div>
+																<div class="modal-footer">
+																	<button type="button" onclick="goBack()" class="mybtn1">Back</button>
+{{--														--------------------------------------------------------}}
+
+													@endif
+
 												</div>
 
 											</div>
@@ -597,7 +622,6 @@
 										<div class="row">
 												<div class="col-lg-12 mt-3">
 													<div class="bottom-area">
-
 															<a href="javascript:;" id="step2-btn" class="mybtn1 mr-3">{{ $langg->lang757 }}</a>
 															<button type="submit" id="final-btn" class="mybtn1">{{ $langg->lang753 }}</button>
 													</div>
@@ -654,11 +678,15 @@
 							<p>
 								{{ $langg->lang128 }}
 							</p>
+
+{{--								Total Price from session--------------------------------------------- ---}}
+
 							<P>
-								<b
-								class="cart-total">{{ Session::has('cart') ? App\Models\Product::convertPrice(Session::get('cart')->totalPrice) : '0.00' }}</b>
+								<b class="cart-total">{{ Session::has('cart') ? App\Models\Product::convertPrice(Session::get('cart')->totalPrice) : '0.00' }}</b>
 							</P>
-							</li>
+						</li>
+
+
 
 							@if($gs->tax != 0)
 
@@ -674,11 +702,7 @@
 
 							@endif
 
-
-
-
 												@if(Session::has('coupon'))
-
 
 							<li class="discount-bar">
 							<p>
@@ -1369,6 +1393,13 @@ var ck = 0;
 		});
 	});
 
+</script>
+
+
+<script>
+	function goBack() {
+		window.history.back();
+	}
 </script>
 
 @endsection

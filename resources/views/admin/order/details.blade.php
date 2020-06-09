@@ -164,13 +164,14 @@
                                                         <tr>
                                                             <th width="45%">{{ __('District') }}</th>
                                                             <th width="10%">:</th>
-                                                            <td width="45%">{{$order->district}}</td>
+                                                            <td width="45%">@if($order->district){{$district[$order->district]}}@endif</td>
                                                         </tr>
+
 
                                                         <tr>
                                                             <th width="45%">{{ __('Thana') }}</th>
                                                             <th width="10%">:</th>
-                                                            <td width="45%">{{$order->thana}}</td>
+                                                            <td width="45%">@if($order->thana){{$thana[$order->thana]}}@endif</td>
                                                         </tr>
 {{--                        ---------------------------- -------------------------------------------------------------}}
                                                         <tr>
@@ -274,15 +275,17 @@
                                 <tr>
                                     <th width="45%"><strong>{{ __('District') }}:</strong></th>
                                     <th width="10%">:</th>
-                <td width="45%">{{$order->shipping_district == null ? $order->customer_district : $order->shipping_district}}</td>
+                <td width="45%">@if($order->shippong_district == null ? $order->shippong_district : $order->shippong_district){{$shippong_district[$order->shippong_district]}}@endif</td>
                                 </tr>
+
 
 
                                 <tr>
                                     <th width="45%"><strong>{{ __('Thana') }}:</strong></th>
                                     <th width="10%">:</th>
-                <td width="45%">{{$order->shippong_thana == null ? $order->shippong_thana : $order->shippong_thana }}</td>
+                <td width="45%">@if($order->shippong_thana == null ? $order->shippong_thana : $order->shippong_thana){{$shippong_thana[$order->shippong_thana]}}@endif</td>
                                 </tr>
+
 
                                 <tr>
                                     <th width="45%"><strong>{{ __('Address') }}:</strong></th>

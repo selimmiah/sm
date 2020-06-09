@@ -166,8 +166,6 @@ class StaffController extends Controller
     public function show($id)
     {
         $data = Admin::findOrFail($id);
-
-
         $districts = District::pluck('district_name', 'id');
         $thanas = Thana::pluck('thana_name', 'id');
 

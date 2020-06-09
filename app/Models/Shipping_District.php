@@ -4,8 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class District extends Model
+class Shipping_District extends Model
 {
+
+    protected $table = 'districts';
+
     protected $fillable = ['id','district_name'];
 
     public $timestamps = false;

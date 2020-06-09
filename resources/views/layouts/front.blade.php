@@ -88,6 +88,7 @@
     </div>
     <!--  Ending of subscribe-pre-loader Area   -->
 
+
 @endif
 
 @endif
@@ -176,21 +177,21 @@
 									@endif
 
 
-                        			@if($gs->reg_vendor == 1)
-										<li>
-                        				@if(Auth::check())
-	                        				@if(Auth::guard('web')->user()->is_vendor == 2)
-	                        					<a href="{{ route('vendor-dashboard') }}" class="sell-btn">{{ $langg->lang220 }}</a>
-	                        				@else
-	                        					<a href="{{ route('user-package') }}" class="sell-btn">{{ $langg->lang220 }}</a>
-	                        				@endif
-										</li>
-                        				@else
+{{--                        			@if($gs->reg_vendor == 1)--}}
+{{--										<li>--}}
+{{--                        				@if(Auth::check())--}}
+{{--	                        				@if(Auth::guard('web')->user()->is_vendor == 2)--}}
+{{--	                        					<a href="{{ route('vendor-dashboard') }}" class="sell-btn">{{ $langg->lang220 }}</a>--}}
+{{--	                        				@else--}}
+{{--	                        					<a href="{{ route('user-package') }}" class="sell-btn">{{ $langg->lang220 }}</a>--}}
+{{--	                        				@endif--}}
+{{--										</li>--}}
+{{--                        				@else--}}
 {{--										<li>--}}
 {{--											<a href="javascript:;" data-toggle="modal" data-target="#vendor-login" class="sell-btn">{{ $langg->lang220 }}</a>--}}
 {{--										</li>--}}
-										@endif
-									@endif
+{{--										@endif--}}
+{{--									@endif--}}
 
 
 								</ul>

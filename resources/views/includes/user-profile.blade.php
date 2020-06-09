@@ -3,8 +3,8 @@
                              <div class="patient__linksArea">
                              	<a href="{{route('user-dashboard')}}" class="patient-btn">{{ $lang->lang78 }}</a>
                                 <a href="{{route('user-appointments')}}" class="patient-btn">{{ $lang->lang79 }}</a>
-                                <a href="{{route('user-messages')}}" class="patient-btn">{{ $lang->lang80 }}</a>   
-                                <a href="{{route('user-message-index')}}" class="patient-btn">{{ $lang->lang81}}</a>  
+                                <a href="{{route('user-messages')}}" class="patient-btn">{{ $lang->lang80 }}</a>
+                                <a href="{{route('user-message-index')}}" class="patient-btn">{{ $lang->lang81}}</a>
                              
                                 <a href="{{route('user-profile')}}" class="patient-btn">{{ $lang->lang82 }}</a>
                                 <a href="{{route('user-reset')}}" class="patient-btn">{{ $lang->lang83 }}</a>

@@ -4,56 +4,112 @@ namespace App\Http\Controllers\Admin;
 
 use App\Classes\GeniusMailer;
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
+use App\Models\District;
 use App\Models\Generalsetting;
 use App\Models\Order;
 use App\Models\OrderTrack;
+use App\Models\Thana;
+use App\Models\Shipping_Thana;
+use App\Models\Shipping_District;
 use App\Models\User;
 use App\Models\VendorOrder;
 use Datatables;
 use PDF;
+use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth:admin');
     }
 
+
     //*** JSON Request
     public function datatables($status)
     {
-        if($status == 'pending'){
-            $datas = Order::where('status','=','pending')->get();
+        $email = Auth::user()->email;
+        $role =Auth::user()->role_id;
+
+        //$user = Auth::user();
+        $id = Auth::id();
+
+        $datasm = Admin::where('role_id','=',$role)->where('id','=',$id)->get();
+        foreach($datasm as $key => $data) {
+//            echo $data->role_id;
+            if ($data->role_id == '19') {
+
+                $district_admin =Auth::user()->district;
+                $thana_admin =Auth::user()->thana;
+
+                if ($status == 'pending') {
+                    $datas = Order::where('status', '=', 'pending')->where('district', '=', $district_admin)->where('thana', '=', $thana_admin)->get();
+                } elseif ($status == 'processing') {
+                    $datas = Order::where('status', '=', 'processing')->where('district', '=', $district_admin)->where('thana', '=', $thana_admin)->get();
+                } elseif ($status == 'completed') {
+                    $datas = Order::where('status', '=', 'completed')->where('district', '=', $district_admin)->where('thana', '=', $thana_admin)->get();
+                } elseif ($status == 'declined') {
+                    $datas = Order::where('status', '=', 'declined')->where('district', '=', $district_admin)->where('thana', '=', $thana_admin)->get();
+                } else {
+                    $datas = Order::orderBy('id', 'desc')->where('district', '=', $district_admin)->where('thana', '=', $thana_admin)->get();
+                }
+
+            } elseif ($data->role_id == '0') {
+
+                if ($status == 'pending') {
+                    $datas = Order::where('status', '=', 'pending')->get();
+                } elseif ($status == 'processing') {
+                    $datas = Order::where('status', '=', 'processing')->get();
+                } elseif ($status == 'completed') {
+                    $datas = Order::where('status', '=', 'completed')->get();
+                } elseif ($status == 'declined') {
+                    $datas = Order::where('status', '=', 'declined')->get();
+                } else {
+                    $datas = Order::orderBy('id', 'desc')->get();
+                }
+
+            }elseif ($data->role_id == '16') {
+                if ($status == 'pending') {
+                    $datas = Order::where('status', '=', 'pending')->get();
+                } elseif ($status == 'processing') {
+                    $datas = Order::where('status', '=', 'processing')->get();
+                } elseif ($status == 'completed') {
+                    $datas = Order::where('status', '=', 'completed')->get();
+                } elseif ($status == 'declined') {
+                    $datas = Order::where('status', '=', 'declined')->get();
+                } else {
+                    $datas = Order::orderBy('id', 'desc')->get();
+                }
+
+            }
         }
-        elseif($status == 'processing') {
-            $datas = Order::where('status','=','processing')->get();
-        }
-        elseif($status == 'completed') {
-            $datas = Order::where('status','=','completed')->get();
-        }
-        elseif($status == 'declined') {
-            $datas = Order::where('status','=','declined')->get();
-        }
-        else{
-          $datas = Order::orderBy('id','desc')->get();  
-        }
-         
-         //--- Integrating This Collection Into Datatables
-         return Datatables::of($datas)
-                            ->editColumn('id', function(Order $data) {
-                                $id = '<a href="'.route('admin-order-invoice',$data->id).'">'.$data->order_number.'</a>';
-                                return $id;
-                            })
-                            ->editColumn('pay_amount', function(Order $data) {
-                                return $data->currency_sign . round($data->pay_amount * $data->currency_value , 2);
-                            })
-                            ->addColumn('action', function(Order $data) {
-                                $orders = '<a href="javascript:;" data-href="'. route('admin-order-edit',$data->id) .'" class="delivery" data-toggle="modal" data-target="#modal1"><i class="fas fa-dollar-sign"></i> Delivery Status</a>';
-                                return '<div class="godropdown"><button class="go-dropdown-toggle"> Actions<i class="fas fa-chevron-down"></i></button><div class="action-list"><a href="' . route('admin-order-show',$data->id) . '" > <i class="fas fa-eye"></i> Details</a><a href="javascript:;" class="send" data-email="'. $data->customer_email .'" data-toggle="modal" data-target="#vendorform"><i class="fas fa-envelope"></i> Send</a><a href="javascript:;" data-href="'. route('admin-order-track',$data->id) .'" class="track" data-toggle="modal" data-target="#modal1"><i class="fas fa-truck"></i> Track Order</a>'.$orders.'</div></div>';
-                            }) 
-                            ->rawColumns(['id','action'])
-                            ->toJson(); //--- Returning Json Data To Client Side
+
+
+            //--- Integrating This Collection Into Datatables
+            return Datatables::of($datas)
+                ->editColumn('id', function (Order $data) {
+                    $id = '<a href="' . route('admin-order-invoice', $data->id) . '">' . $data->order_number . '</a>';
+                    return $id;
+                })
+                ->editColumn('pay_amount', function (Order $data) {
+                    return $data->currency_sign . round($data->pay_amount * $data->currency_value, 2);
+                })
+                ->addColumn('action', function (Order $data) {
+                    $orders = '<a href="javascript:;" data-href="' . route('admin-order-edit', $data->id) . '" class="delivery" data-toggle="modal" data-target="#modal1"><i class="fas fa-dollar-sign"></i> Delivery Status</a>';
+                    return '<div class="godropdown"><button class="go-dropdown-toggle"> Actions<i class="fas fa-chevron-down"></i></button><div class="action-list"><a href="' . route('admin-order-show', $data->id) . '" > <i class="fas fa-eye"></i> Details</a><a href="javascript:;" class="send" data-email="' . $data->customer_email . '" data-toggle="modal" data-target="#vendorform"><i class="fas fa-envelope"></i> Send</a><a href="javascript:;" data-href="' . route('admin-order-track', $data->id) . '" class="track" data-toggle="modal" data-target="#modal1"><i class="fas fa-truck"></i> Track Order</a>' . $orders . '</div></div>';
+                })
+                ->rawColumns(['id', 'action'])
+                ->toJson(); //--- Returning Json Data To Client Side
+
+
+
+
+
+
     }
     public function index()
     {
@@ -66,9 +122,13 @@ class OrderController extends Controller
         return view('admin.order.delivery',compact('data'));
     }
 
+
+
+
     //*** POST Request
     public function update(Request $request, $id)
     {
+
 
         //--- Logic Section
         $data = Order::findOrFail($id);
@@ -160,8 +220,6 @@ class OrderController extends Controller
                         $data->text = $request->track_text;
                         $data->save();            
                     }
-    
-    
             } 
 
 
@@ -197,21 +255,45 @@ class OrderController extends Controller
     {
         return view('admin.order.declined');
     }
+
+
     public function show($id)
     {
+
+
         if(!Order::where('id',$id)->exists())
         {
             return redirect()->route('admin.dashboard')->with('unsuccess',__('Sorry the page does not exist.'));
         }
+
+
+
         $order = Order::findOrFail($id);
+
+
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
-        return view('admin.order.details',compact('order','cart'));
+        $district = District::pluck('district_name', 'id');
+        $thana = Thana::pluck('thana_name', 'id');
+        $shippong_district = Shipping_District::pluck('district_name', 'id');
+        $shippong_thana = Shipping_Thana::pluck('thana_name', 'id');
+
+        return view('admin.order.details',compact('order','cart','district','thana','shippong_district','shippong_thana'));
     }
+
+
+
     public function invoice($id)
     {
         $order = Order::findOrFail($id);
         $cart = unserialize(bzdecompress(utf8_decode($order->cart)));
-        return view('admin.order.invoice',compact('order','cart'));
+
+
+        $district = District::pluck('district_name', 'id');
+        $thana = Thana::pluck('thana_name', 'id');
+        $shippong_district = Shipping_District::pluck('district_name', 'id');
+        $shippong_thana = Shipping_Thana::pluck('thana_name', 'id');
+
+        return view('admin.order.invoice',compact('order','cart','district','thana','shippong_district','shippong_thana'));
     }
     public function emailsub(Request $request)
     {

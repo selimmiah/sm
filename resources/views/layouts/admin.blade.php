@@ -130,7 +130,7 @@
 										<div class="dropdown-menu">
 											<div class="dropdownmenu-wrapper">
 													<ul>
-														<h5>{{ __('Welcome!') }}</h5>
+														<h5>{{ __('Welcome to '.Auth::guard('admin')->user()->name)}}</h5>
 															<li>
 																<a href="{{ route('admin.profile') }}"><i class="fas fa-user"></i> {{ __('Edit Profile') }}</a>
 															</li>
@@ -165,7 +165,7 @@
 
 						</ul>
 					@if(Auth::guard('admin')->user()->IsSuper())
-					<p class="version-name"> Version: 1.7.4</p>
+{{--					<p class="version-name"> Version: 1.7.4</p>--}}
 					@endif
 					</nav>
 					<!-- Main Content Area Start -->
@@ -217,7 +217,7 @@
 
 @if($gs->is_admin_loader == 0)
 <style>
-	div#geniustable_processing {
+	div#sm_processing {
 		display: none !important;
 	}
 </style>

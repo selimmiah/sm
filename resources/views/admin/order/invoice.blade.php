@@ -65,8 +65,8 @@
                             <p><strong>{{ __('Shipping Address') }}</strong></p>
                            <span><strong>{{ __('Customer Name') }}</strong>: {{ $order->shipping_name == null ? $order->customer_name : $order->shipping_name}}</span><br>
 
-                            <span><strong>{{ __('District') }}</strong>: {{ $order->shipping_district == null ? $order->customer_districtdistrict : $order->shipping_district }}</span><br>
-                            <span><strong>{{ __('Thana') }}</strong>: {{ $order->shipping_thana == null ? $order->customer_thana : $order->shipping_thana }}</span><br>
+                            <span><strong>{{ __('District') }}</strong>: @if($order->shippong_district == null ? $order->shippong_district : $order->shippong_district){{$shippong_district[$order->shippong_district]}}@endif</span><br>
+                            <span><strong>{{ __('Thana') }}</strong>: @if($order->shippong_thana == null ? $order->shippong_thana : $order->shippong_thana){{$shippong_thana[$order->shippong_thana]}}@endif</span><br>
 
                            <span><strong>{{ __('Address') }}</strong>: {{ $order->shipping_address == null ? $order->customer_address : $order->shipping_address }}</span><br>
 {{--                           <span><strong>{{ __('City') }}</strong>: {{ $order->shipping_city == null ? $order->customer_city : $order->shipping_city }}</span><br>--}}
@@ -81,8 +81,8 @@
                         <div class="buyer">
                             <p><strong>{{ __('Billing Details') }}</strong></p>
                             <span><strong>{{ __('Customer Name') }}</strong>: {{ $order->customer_name}}</span><br>
-                            <span><strong>{{ __('District') }}</strong>: {{ $order->district }}</span><br>
-                            <span><strong>{{ __('Thana') }}</strong>: {{ $order->thana }}</span><br>
+                            <span><strong>{{ __('District') }}</strong>: @if($order->district){{$district[$order->district]}}@endif</span><br>
+                            <span><strong>{{ __('Thana') }}</strong>: @if($order->thana){{$thana[$order->thana]}}@endif</span><br>
                             <span><strong>{{ __('Address') }}</strong>: {{ $order->customer_address }}</span><br>
 
 

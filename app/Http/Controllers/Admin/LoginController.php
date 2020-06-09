@@ -34,16 +34,19 @@ class LoginController extends Controller
                 ];
 
         $validator = Validator::make(Input::all(), $rules);
+
         
         if ($validator->fails()) {
           return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         //--- Validation Section Ends
 
-      // Attempt to log the user in
-      if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password], $request->remember)) {
+      // -----------------------------------------------------Attempt to log the user in-------------------------------------------------------------------------
+      if (Auth::guard('admin')->attempt(['email' => $request->email,
+                                         'password' => $request->password], $request->remember)) {
         // if successful, then redirect to their intended location
         return response()->json(route('admin.dashboard'));
+
       }
 
       // if unsuccessful, then redirect back to the login with the form data
@@ -67,6 +70,7 @@ class LoginController extends Controller
       $admin->update($input);
       $subject = "Reset Password Request";
       $msg = "Your New Password is : ".$autopass;
+
       if($gs->is_smtp == 1)
       {
           $data = [

@@ -42,7 +42,7 @@
                                         @include('includes.admin.form-success') 
                                         <div class="table-responsiv">
                                         <div class="gocover" style="background: url({{asset('images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);"></div>
-                                                <table id="geniustable" class="table table-hover dt-responsive" cellspacing="0" width="100%">
+                                                <table id="sm" class="table table-hover dt-responsive" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
                                                             <th>{{ __('Customer Email') }}</th>
@@ -178,7 +178,7 @@
 
     <script type="text/javascript">
 
-        var table = $('#geniustable').DataTable({
+        var table = $('#sm').DataTable({
                ordering: false,
                processing: true,
                serverSide: true,
@@ -194,10 +194,10 @@
                     processing: '<img src="{{asset('images/'.$gs->admin_loader)}}">'
                 },
                 drawCallback : function( settings ) {
-                        $('.select').niceSelect();  
+                        $('.select').niceSelect();
                 }
             });
-                                                                
+
     </script>
 
 {{-- DATA TABLE --}}

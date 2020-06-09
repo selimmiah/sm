@@ -129,7 +129,6 @@ class CheckoutController extends Controller
                 $package_data  = DB::table('packages')->where('user_id','=',0)->get();
                 }
 
-
                 foreach ($products as $prod) {
                     if($prod['item']['type'] == 'Physical')
                     {
@@ -446,7 +445,8 @@ class CheckoutController extends Controller
         $order['packing_cost'] = $request->packing_cost;
         $order['tax'] = $request->tax;
         $order['customer_phone'] = $request->phone;
-        $order['order_number'] = str_random(4).time();
+        $order['order_number'] = date('Y').rand(1,99999999);
+//        $order['order_number'] = str_random(4).time();
         $order['customer_address'] = $request->address;
         $order['customer_country'] = $request->customer_country;
         $order['customer_city'] = $request->city;
@@ -735,7 +735,8 @@ $validator = Validator::make($input, $rules, $messages);
         $order['packing_cost'] = $request->packing_cost;
         $order['tax'] = $request->tax;
         $order['customer_phone'] = $request->phone;
-        $order['order_number'] = str_random(4).time();
+//        $order['order_number'] = str_random(4).time();
+        $order['order_number'] = date('Y').rand(1,99999999);
         $order['customer_address'] = $request->address;
         $order['customer_country'] = $request->customer_country;
         $order['customer_city'] = $request->city;
@@ -866,7 +867,24 @@ $validator = Validator::make($input, $rules, $messages);
         Session::forget('coupon_total1');
         Session::forget('coupon_percentage');
 
-
+////------------------------------- SMS Mobile for user and distributor ------------------
+//
+//
+//        $to = $request->photo;
+//
+//       dd($to);
+//        if(!$to == null){
+//
+//         // $subject = "Your Order Placed!!";
+//
+//            $msg = "Hello ".$request->name."!\nYou have placed a new order.\nYour order number is ".$order->order_number.".Please wait for your delivery.\n Please check your email \nThank you.";
+//
+//            "http://sms.ajuratech.com/api/mt/SendSMS?user=matadorgroup&password=matador123&senderid=8801844215566&channel=Normal&DCS=0&flashsms=0&number=8801737968879&text=".$msg;
+//
+//        }
+//
+//
+////--------------------------- END SMS ----------------------------------------------
 
         
 
@@ -895,6 +913,8 @@ $validator = Validator::make($input, $rules, $messages);
             $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
            mail($to,$subject,$msg,$headers);            
         }
+
+
         //Sending Email To Admin
         if($gs->is_smtp == 1)
         {

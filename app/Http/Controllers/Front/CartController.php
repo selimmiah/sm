@@ -65,15 +65,16 @@ class CartController extends Controller
         if (Session::has('language')) 
         {
             $data = \DB::table('languages')->find(Session::get('language'));
-            $data_results = file_get_contents(public_path().'/public/languages/'.$data->file);
+            $data_results = file_get_contents(public_path().'/languages/'.$data->file);
             $lang = json_decode($data_results);
 
         }
         else
         {
             $data = \DB::table('languages')->where('is_default','=',1)->first();
-            $data_results = file_get_contents(public_path().'/public/languages/'.$data->file);
+            $data_results = file_get_contents(public_path().'/languages/'.$data->file);
             $lang = json_decode($data_results);
+
 
         }  
 
@@ -467,14 +468,14 @@ class CartController extends Controller
         if (Session::has('language')) 
         {
             $data = \DB::table('languages')->find(Session::get('language'));
-            $data_results = file_get_contents(public_path().'/public/languages/'.$data->file);
+            $data_results = file_get_contents(public_path().'/languages/'.$data->file);
             $lang = json_decode($data_results);
 
         }
         else
         {
             $data = \DB::table('languages')->where('is_default','=',1)->first();
-            $data_results = file_get_contents(public_path().'/public/languages/'.$data->file);
+            $data_results = file_get_contents(public_path().'/languages/'.$data->file);
             $lang = json_decode($data_results);
 
         }  

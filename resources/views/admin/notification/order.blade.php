@@ -1,4 +1,4 @@
-		<a class="clear">{{ __('New Order(s).') }} 
+		<a class="clear">{{ __('New Order(s).') }}
 			@if(count($datas) > 0)
 			<span id="order-notf-clear" class="clear-notf" data-href="{{ route('order-notf-clear') }}">
 				{{ __('Clear All') }}
@@ -19,7 +19,7 @@
 
 		</ul>
 
-		@else 
+		@else
 
 		<a class="clear" href="javascript:;">
 			{{ __('No New Notifications.') }}

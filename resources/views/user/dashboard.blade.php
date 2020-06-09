@@ -56,23 +56,23 @@
               </div>
             </div>
         
-            <div class="col-lg-6">
-              <div class="user-profile-details h100">
-                <div class="account-info wallet h100">
-                  <div class="header-area">
-                    <h4 class="title">
-                      {{ isset($langg->lang812) ? $langg->lang812 : 'My Balance' }}
-                    </h4>
-                  </div>
-                  <div class="edit-info-area">
-                  </div>
-                  <div class="main-info">
-                    <h3 class="title w-title">{{ $langg->lang215 }}:</h3>
-                    <h3 class="title w-price">{{ App\Models\Product::vendorConvertPrice($user->affilate_income) }}</h3>
-                  </div>
-                </div>
-              </div>
-            </div>
+{{--            <div class="col-lg-6">--}}
+{{--              <div class="user-profile-details h100">--}}
+{{--                <div class="account-info wallet h100">--}}
+{{--                  <div class="header-area">--}}
+{{--                    <h4 class="title">--}}
+{{--                      {{ isset($langg->lang812) ? $langg->lang812 : 'My Balance' }}--}}
+{{--                    </h4>--}}
+{{--                  </div>--}}
+{{--                  <div class="edit-info-area">--}}
+{{--                  </div>--}}
+{{--                  <div class="main-info">--}}
+{{--                    <h3 class="title w-title">{{ $langg->lang215 }}:</h3>--}}
+{{--                    <h3 class="title w-price">{{ App\Models\Product::vendorConvertPrice($user->affilate_income) }}</h3>--}}
+{{--                  </div>--}}
+{{--                </div>--}}
+{{--              </div>--}}
+{{--            </div>--}}
         </div>
 
 

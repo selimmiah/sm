@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Generalsetting;
 use App\Models\Currency;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class Product extends Model
@@ -281,6 +282,7 @@ class Product extends Model
     }
 
     public static function convertPrice($price) {
+
         $gs = Generalsetting::findOrFail(1);
         if (Session::has('currency'))
         {
@@ -290,12 +292,25 @@ class Product extends Model
         {
             $curr = Currency::where('is_default','=',1)->first();
         }
+
         $price = round($price * $curr->value,2);
+
+
+        if ( round($price * $curr->value,2) < $gs->minitmam_orders){
+
+            $price = round($price * $curr->value,2);
+
+        }
+
+
+
         if($gs->currency_format == 0){
             return $curr->sign.$price;
         }
         else{
             return $price.$curr->sign;
+
+
         }
     }
 

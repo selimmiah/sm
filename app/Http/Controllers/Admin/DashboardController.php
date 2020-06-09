@@ -25,6 +25,7 @@ class DashboardController extends Controller
 
     public function index()
     {
+
         $pending = Order::where('status','=','pending')->get();
         $processing = Order::where('status','=','processing')->get();
         $completed = Order::where('status','=','completed')->get();
@@ -32,9 +33,9 @@ class DashboardController extends Controller
         $sales = "";
         for($i = 0; $i < 30; $i++) {
             $days .= "'".date("d M", strtotime('-'. $i .' days'))."',";
-
             $sales .=  "'".Order::where('status','=','completed')->whereDate('created_at', '=', date("Y-m-d", strtotime('-'. $i .' days')))->count()."',";
         }
+
         $users = User::all();
         $products = Product::all();
         $blogs = Blog::all();
@@ -75,6 +76,7 @@ class DashboardController extends Controller
 
 
         $validator = Validator::make(Input::all(), $rules);
+
 
         if ($validator->fails()) {
           return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
